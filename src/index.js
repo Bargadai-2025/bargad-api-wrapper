@@ -1,5 +1,5 @@
 import express from "express";
-import { BASE_URL } from "./config/env.config.js";
+import { PORT } from "./config/env.config.js";
 import connectToDatabase from "./db/db.js";
 import cors from "cors";
 import CreateApiRouter from "./routes/createapi.route.js";
@@ -25,7 +25,12 @@ app.get("/", (req, res) => {
   res.json({ message: "backend api ready!" });
 });
 
-app.listen(BASE_URL, async () => {
-  await connectToDatabase();
-  console.log(`Server is running on http://localhost:${BASE_URL}`);
+app.listen(PORT, "0.0.0.0", async () => {
+  try {
+    await connectToDatabase();
+    console.log(`Server is running on port ${PORT}`);
+  } catch (error) {
+    console.error("Failed to start server:", error.message);
+    process.exit(1);
+  }
 });
