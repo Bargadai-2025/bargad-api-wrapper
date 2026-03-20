@@ -28,9 +28,8 @@ app.get("/", (req, res) => {
 app.listen(PORT, "0.0.0.0", async () => {
   try {
     await connectToDatabase();
-    console.log(`Server is running on port ${PORT}`);
   } catch (error) {
-    console.error("Failed to start server:", error.message);
-    process.exit(1);
+    console.error("Database connection failed:", error.message);
   }
+  console.log(`Server is running on port ${PORT}`);
 });
